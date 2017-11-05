@@ -2,7 +2,7 @@ import {
     generate_sault,
     hash_password,
     valid_password
-} from '../../../api/tools/util'
+} from './util'
 
 import { expect, assert } from 'chai'
 import 'mocha'

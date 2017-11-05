@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "init": "cnpm install",
-    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register src/test/**/*.ts"
+    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register src/**/*.spec.ts",
+    "test-cov": "istanbul cover ./node_modules/mocha/bin/_mocha -- -r ./node_modules/ts-node/register src/**/*.spec.ts"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -26,8 +27,11 @@
     "@types/mongoose": "^4.7.24",
     "@types/node": "^8.0.47",
     "@types/redis": "^2.8.1",
+    "@types/supertest": "^2.0.3",
     "chai": "^4.1.2",
+    "istanbul-harmony": "^0.3.16",
     "mocha": "^4.0.1",
+    "supertest": "^3.0.0",
     "ts-node": "^3.3.0",
     "typescript": "^2.6.1"
   }
