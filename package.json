@@ -2,7 +2,8 @@
   "name": "seedServer",
   "version": "0.0.1",
   "scripts": {
-    "init": "cnpm install"
+    "init": "cnpm install",
+    "test": "./node_modules/.bin/mocha -r ./node_modules/ts-node/register src/test/**/*.ts"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -16,12 +17,18 @@
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.7",
+    "@types/chai": "^4.0.4",
     "@types/express": "^4.0.39",
     "@types/express-jwt": "^0.0.38",
     "@types/jsonwebtoken": "^7.2.3",
     "@types/log4js": "^2.3.5",
+    "@types/mocha": "^2.2.44",
     "@types/mongoose": "^4.7.24",
     "@types/node": "^8.0.47",
-    "@types/redis": "^2.8.1"
+    "@types/redis": "^2.8.1",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1"
   }
 }
