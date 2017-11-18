@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-import { AdminModel } from './Admin';
+import { UserModel } from './User';
 
 const Schema = mongoose.Schema;
 
@@ -37,5 +37,5 @@ let model = new Schema({
     }
 })
 
-const Admin = mongoose.model<AdminModel.IAdmin>('Admin', model);
-export default Admin;
+const User = mongoose.model<UserModel.IUser>('User', model);
+export default User;
