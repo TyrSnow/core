@@ -29,4 +29,4 @@ const logConfig = {
     replaceConsole: true
 }
 
-export default logConfig;
+export default logConfig
