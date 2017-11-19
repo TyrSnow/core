@@ -11,7 +11,10 @@ export enum UserStatus {
     DELETE,
     INITIALIZE
 }
-export function getUserStatus(user: UserModel.IUser) {
+/**
+ * 返回用户的状态
+ */
+export function getUserStatus(user: UserModel.IUser): UserStatus {
     if (user.block) {
         return UserStatus.BLOCK;
     }
