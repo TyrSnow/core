@@ -1,0 +1,1 @@
+{"version":3,"file":"query.schema.js","sourceRoot":"","sources":["../../../../src/api/schemas/common/query.schema.ts"],"names":[],"mappings":";;AAAA,MAAM,WAAW,GAAG;IAChB,IAAI,EAAE,QAAQ;IACd,UAAU,EAAE;QACR,CAAC,EAAE,QAAQ;QACX,CAAC,EAAE,QAAQ;QACX,CAAC,EAAE,QAAQ;KACd;CACJ,CAAA;AAEQ,kCAAW"}

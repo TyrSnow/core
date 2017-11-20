@@ -1,0 +1,1 @@
+{"version":3,"file":"token.service.js","sourceRoot":"","sources":["../../../src/api/services/token.service.ts"],"names":[],"mappings":";;AAAA,oCAAmC;AAEnC,yCAAiC;AAEjC;IACI,MAAM,CAAC,IAAI,CACP,OAAY,EACZ,YAAoB,IAAI;QAExB,MAAM,CAAC,GAAG,CAAC,IAAI,CAAC,OAAO,EAAE,gBAAM,CAAC,SAAS,EAAE;YACvC,SAAS;SACZ,CAAC,CAAC;IACP,CAAC;CACJ;AAED,kBAAe,QAAQ,CAAA"}

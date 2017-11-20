@@ -10,3 +10,4 @@ else {
     config = development_1.default;
 }
 exports.default = config;
+//# sourceMappingURL=index.js.map

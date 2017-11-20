@@ -37,3 +37,4 @@ function ERROR(req, res, prefix) {
     };
 }
 exports.ERROR = ERROR;
+//# sourceMappingURL=response.js.map

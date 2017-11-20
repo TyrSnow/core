@@ -5,3 +5,4 @@ const config_1 = require("../config");
 log4js.configure(config_1.default.log);
 let logger = log4js.getLogger('default');
 logger.info('[Logger]initialized.');
+//# sourceMappingURL=start.log.js.map

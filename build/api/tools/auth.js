@@ -31,3 +31,4 @@ let requestRoot = (req, res, next) => {
     });
 };
 exports.requestRoot = requestRoot;
+//# sourceMappingURL=auth.js.map

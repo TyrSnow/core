@@ -10,3 +10,4 @@ let logger = log4js.getLogger('default');
 db.on('error', (err) => {
     logger.fatal('[DB]Initialize error: ', err);
 });
+//# sourceMappingURL=start.db.js.map

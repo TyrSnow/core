@@ -17,6 +17,7 @@ const CODE = {
     LOW_AUTHORIZE: C(20001, '您的权限不足', 401),
     EXPIRE_AUTHORIZE: C(20002, '您已自动退出系统，请重新登陆', 400),
     DUMPLICAT_AUTHORIZE: C(20003, '您已在其他地方登陆', 400),
+    NO_AUTH_TO_ACCESS_RESOURCE: C(20004, '您没有访问它的权限'),
 
     // 登陆注册
     WRONG_AUTHORIZE: C(21000, '用户名或密码错误'),
@@ -27,11 +28,13 @@ const CODE = {
     
     DUMPLICATE_NAME: C(22001, '用户名已经被注册'),
     DUMPLICATE_PHONE: C(22002, '手机号已经被注册'),
-    DUMPLICATE_EMAIL: C(22003, '邮箱已经存在'),
+    DUMPLICATE_EMAIL: C(22003, '邮箱已经被注册'),
 
     ILLEGAL_PASSWORD: C(23001, '非法的密码格式'),
     ILLEGAL_USERNAME: C(23002, '非法的用户名'),
 
+    // 文档
+    DOC_NOT_EXIST: C(30000, '文档不存在'),
 }
 
 export default CODE

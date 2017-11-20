@@ -7,3 +7,4 @@ var AUTH_TYPE;
     AUTH_TYPE[AUTH_TYPE["ROOT"] = 2] = "ROOT";
 })(AUTH_TYPE || (AUTH_TYPE = {}));
 exports.default = AUTH_TYPE;
+//# sourceMappingURL=AuthType.enum.js.map

@@ -12,3 +12,5 @@ class TokenSrv {
         });
     }
 }
+
+export default TokenSrv
