@@ -31,7 +31,3 @@ describe('Test generate_sault', () => {
         expect(timeEnd - timeStart).lessThan(100);
     })
 })
-
-describe('Test hash_password', () => {
-    
-})

@@ -21,7 +21,6 @@ app.use('/api', routes_1.default);
 // 后置错误处理
 let error = log4js.getLogger('error');
 app.use(function (err, req, res, next) {
-    error.error(JSON.stringify(err));
     if (err.status === 401) {
         return res.status(401).json({
             note: err.message
@@ -37,6 +36,7 @@ app.use(function (err, req, res, next) {
             note: 'Invalid params.'
         });
     }
+    error.error(JSON.stringify(err));
     res.status(500).send({
         note: 'Unrecognized Error'
     });
