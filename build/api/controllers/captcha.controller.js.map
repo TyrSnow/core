@@ -1,1 +1,0 @@
-{"version":3,"file":"captcha.controller.js","sourceRoot":"","sources":["../../../src/api/controllers/captcha.controller.ts"],"names":[],"mappings":"AAAA;IACI;;;OAGG;IACH,MAAM,CAAC,QAAQ,CAAC,GAAG,EAAE,GAAG;IAIxB,CAAC;IACD;;OAEG;IACH,MAAM,CAAC,KAAK,CAAC,GAAG,EAAE,GAAG;QACjB,IAAI,EAAE,EAAE,EAAE,IAAI,EAAE,GAAG,GAAG,CAAC,IAAI,CAAC;IAGhC,CAAC;CACJ"}
