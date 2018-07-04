@@ -1,4 +1,6 @@
 # core
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTyrSnow%2Fcore.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FTyrSnow%2Fcore?ref=badge_shield)
+
 包含方便开发的各种注解。
 # 1. 功能模块
 ## Config
@@ -63,3 +65,6 @@ Task只应包含定时参数，并调用Service来完成任务，Task不应包�
 Loader负责加载各个功能类别的文件，需要注意的是，loader可以配置从不同的地方加载不同的文件。
 ## Starter
 Starter负责初始化各种不同的功能。
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTyrSnow%2Fcore.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTyrSnow%2Fcore?ref=badge_large)
