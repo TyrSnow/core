@@ -1,6 +1,7 @@
 /**
  * 修饰器工厂
  */
+// tslint:disable-next-line:no-import-side-effect
 import 'reflect-metadata';
 
 // 所有的可注入项空间
@@ -42,9 +43,9 @@ export function createInjector(
   isSinglon: boolean = true,
   generate?: any,
 ) {
-  return (option?: any, injectorName?) => {
+  return (option?: any) => {
     return <T extends {new(...args: any[]): {}}>(injectConstructor: T) => {
-      const name = injectorName || injectConstructor.name;
+      const { name } = injectConstructor;
       const paramsTypes: Function[] = Reflect.getMetadata('design:paramtypes', injectConstructor);
 
       const dependencies = [];
