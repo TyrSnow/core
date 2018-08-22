@@ -1,8 +1,16 @@
 import { createInjector } from '../ioc/factor';
 
+function stringifyParam(param: any) {
+  let str = JSON.stringify(param);
+  if (str.length > 1000) {
+    return '[Big String]';
+  }
+  return str;
+}
+
 function logParams(func: any, prefix: string) {
   return function (...args) {
-    // this.log && this.log.debug(prefix, func.name, 'called:', args.map(arg => JSON.stringify(arg)).join(','));
+    console.debug(prefix, func.name, 'called:', args.map(stringifyParam).join(','));
     return func.apply(this, args);
   }
 }

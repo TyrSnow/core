@@ -2,6 +2,7 @@ import * as cluster from 'cluster';
 import * as os from 'os';
 import { create } from '../ioc/factor';
 import { agentLoader } from '../agent/loader';
+import { Code } from 'bson';
 
 /**
  * 负责维护cluster
@@ -17,6 +18,7 @@ export class ApplicationMaster {
 
   private workerMap: Map<number, cluster.Worker> = new Map();
   private agentMap: Map<string, any> = new Map();
+  private handleMap: Map<string, number> = new Map();
   private agentsClass: any[] = [];
   private config: any;
 
@@ -26,29 +28,69 @@ export class ApplicationMaster {
     this.config = Object.assign({}, ApplicationMaster.defaultConfig, config);
     this.agentsClass = agentLoader(this.config.agentPath);
   }
-  
-  getAgent(agentname: string) {
-    let agent = this.agentMap.get(agentname);
-    if (agent) {
-      return agent;
-    }
-    let agentClass = this.agentsClass.find((agent) => agent.name === agentname);
-    agent = create(agentClass);
-    this.agentMap.set(agentname, agent);
-    return agent;
-  }
 
   triggerAgent(worker: cluster.Worker, message: any) {
-    const {
-      handleId, args, agentName, propName,
-    } = message;
-    let agent = this.getAgent(agentName);
-    const response = agent[propName].apply(agent, args);
+    try {
+      let agent = this.agentMap.get(message.agentName);
+      if (agent) {
+        agent.send(message);
+        this.handleMap.set(message.handleId, worker.id);
+      } else {
+        worker.send({
+          handleId: message.handleId,
+          reject: new Error('Agent not exist'),
+        });
+      }
+    } catch (err) {
+      worker.send({
+        handleId: message.handleId,
+        reject: err,
+      });
+    }
+  }
 
-    worker.send({
-      handleId,
-      response,
+  forkAgent(agentClass: string) {
+    const agent = cluster.fork({
+      FORK_TYPE: 'agent',
+      AGENT_CLASS: agentClass,
     });
+
+    agent.on('message', (message) => {
+      // 检查有没有执行记录
+      const { handleId } = message;
+      const workerId = this.handleMap.get(handleId);
+      this.handleMap.delete(handleId);
+      const worker = this.workerMap.get(workerId);
+      worker.send(message, (err) => {
+        if (err) {
+          this.workerSendError(workerId, err);
+        }
+      });
+    });
+
+    agent.on('exit', (Code, signal) => {
+      // 替换掉agent，调用的时候直接返回服务不可用
+    });
+
+    this.agentMap.set(agentClass, agent);
+  }
+  
+  startAgent() {
+    let agentsClass = agentLoader(this.config.agentPath);
+    agentsClass.map((agentClass) => {
+      this.forkAgent(agentClass.name);
+    });
+  }
+
+  workerSendError(workerId: number, err: Error) {
+    console.debug('Try to send to worker ', workerId, 'with error ', err);
+  }
+  
+  /**
+   * Do some clean work when worker cluster died
+   */
+  cleanDiedWorker(workerId: number) {
+
   }
 
   forkWorker() {
@@ -58,7 +100,11 @@ export class ApplicationMaster {
         this.triggerAgent(worker, message);
       }
     });
-
+  
+    worker.on('exit', (code, signal) => {
+      // 重启一个worker
+    });
+  
     this.workerMap.set(worker.id, worker);
   }
 
@@ -67,9 +113,16 @@ export class ApplicationMaster {
     for (let i = 0; i < clusterNum; i++) {
       this.forkWorker();
     }
+
+    this.startAgent();
+    return this;
+  }
+  
+  stop() {
+    
   }
 
   listen(...args) {
-    this.start();
+    return this.start();
   }
 }

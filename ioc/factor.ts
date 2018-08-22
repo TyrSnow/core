@@ -14,6 +14,7 @@ const generatePool: Map<string, any> = new Map();
 
 /**
  * 检查新加入的依赖项是否引起了循环依赖
+ * 这个功能暂时没有用，因为现在注入是依赖于类定义的，循环依赖发生时，似乎环上肯定有一个类处于undefined
  */
 function checkBackendDependency(
   name: string,

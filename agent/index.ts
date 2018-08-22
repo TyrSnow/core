@@ -14,12 +14,30 @@ process.on('message', (message) => {
   }
 });
 
-function callMasterAgent(agentName: string, propName: string) {
+function proxyAgentCall(agentName: string, propName: string, instance: any) {
+  /**
+   * Master 下需要保证执行时的error会通过Promise.reject回去，从而与Worker下一致
+   */
+  if (cluster.isMaster) {
+    return function (...args) {
+      try {
+        return instance[propName].apply(instance, args);
+      } catch (err) {
+        return Promise.reject(err);
+      }
+    }
+  }
   return function (...args) {
     const handleId = new ObjectId().toHexString();
     return new Promise((resolve, reject) => {
       handleMap.set(handleId, ((response) => {
-        resolve(response);
+        if (response.resolve) {
+          resolve.apply(this, response.resolve);
+        } else if (response.reject) {
+          reject.apply(this, response.reject);
+        } else { 
+          reject(new Error('Agent Called Error.'));
+        }
       }));
 
       process.send({
@@ -38,18 +56,14 @@ function callMasterAgent(agentName: string, propName: string) {
  * slaver下所有属性函数会被替换成与master的通讯
  */
 export const agent = createInjector('agent', true, (instance) => {
-  if (cluster.isMaster) {
-    return instance;
-  } else { // 替换掉所有属性
-    const propType = Object.getPrototypeOf(instance);
-    const keys = Reflect.ownKeys(propType);
+  const propType = Object.getPrototypeOf(instance);
+  const keys = Reflect.ownKeys(propType);
 
-    keys.map(key => {
-      if (key !== 'constructor' && typeof propType[key] === 'function') {
-        instance[propType] = callMasterAgent(propType.constructor.name, key as string);
-      }
-    });
+  keys.map(key => {
+    if (key !== 'constructor' && typeof propType[key] === 'function') {
+      instance[propType] = proxyAgentCall(propType.constructor.name, key as string, instance);
+    }
+  });
 
-    return instance;
-  }
+  return instance;
 });
