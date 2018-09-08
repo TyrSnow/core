@@ -45,7 +45,7 @@ export function createInjector(
   generate?: any,
 ) {
   return (option?: any) => {
-    return <T extends {new(...args: any[]): {}}>(injectConstructor: T) => {
+    return <T extends {new(...args: any[]): {}}>(injectConstructor: T): any => {
       const { name } = injectConstructor;
       const paramsTypes: Function[] = Reflect.getMetadata('design:paramtypes', injectConstructor);
 

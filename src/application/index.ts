@@ -16,4 +16,5 @@ if (
 ) {
   Application = ClusterAgent;
 }
+
 export default Application;

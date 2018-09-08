@@ -1,8 +1,6 @@
 import * as cluster from 'cluster';
 import * as os from 'os';
-import { create } from '../ioc/factor';
 import { agentLoader } from '../agent/loader';
-import { Code } from 'bson';
 
 /**
  * 负责维护cluster
@@ -58,14 +56,20 @@ export class ApplicationMaster {
     agent.on('message', (message) => {
       // 检查有没有执行记录
       const { handleId } = message;
-      const workerId = this.handleMap.get(handleId);
-      this.handleMap.delete(handleId);
-      const worker = this.workerMap.get(workerId);
-      worker.send(message, (err) => {
-        if (err) {
-          this.workerSendError(workerId, err);
+      if (handleId) {
+        const workerId = this.handleMap.get(handleId);
+        this.handleMap.delete(handleId);
+        const worker = this.workerMap.get(workerId);
+        if (worker) {
+          worker.send(message, (err) => {
+            if (err) {
+              this.workerSendError(workerId, err);
+            }
+          });
+        } else {
+          console.debug('worker already died: ', workerId);
         }
-      });
+      }
     });
 
     agent.on('exit', (Code, signal) => {
